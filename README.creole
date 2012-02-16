@@ -1,0 +1,10 @@
+= Greasemonkey Script
+
+The [[https://addons.mozilla.org/en-US/firefox/addon/greasemonkey/|Greasemonkey]] extension for Firefox runs scripts in the context of the loaded documents.
+A few such scripts can be downloaded from the [[http://userscripts.org/|userscripts.org script repository]].
+
+Here are some scripts I wrote.
+
+* **Tecumseh - Time Ago** - Adds relative approximate equivalent after dates
+
+This scripts were intentionally kept short. For details see the [[http://feherke.github.com/javascript/greasemonkey/|Greasemonkey section of my site]].
