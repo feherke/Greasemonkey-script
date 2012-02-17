@@ -5,6 +5,7 @@ A few such scripts can be downloaded from the [[http://userscripts.org/|userscri
 
 Here are some scripts I wrote.
 
-* **Tecumseh - Time Ago** - Adds relative approximate equivalent after dates
+* **TipMaster - Time Ago** - Adds relative approximate equivalent after dates
+* **TipMaster - Reply with Quote** - Adds a reply link below each post to easily quote the answered message.
 
 This scripts were intentionally kept short. For details see the [[http://feherke.github.com/javascript/greasemonkey/|Greasemonkey section of my site]].
