@@ -80,7 +80,7 @@ function timeago(what,withhour)
   for (var i=0,l=unit.length;i<l;i++) {
     if (time>=unit[i][1] || (unit[i][0]=='day' && !withhour)) {
       var amount=time/(unit[i][1]?unit[i][1]:1)
-      return amount.toFixed(1)+' '+unit[i][0]+(amount>=2?'s':'')
+      return amount.toFixed(1).replace(/\.0$/,'')+' '+unit[i][0]+(amount>=2?'s':'')
     }
   }
 }
