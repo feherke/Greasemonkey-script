@@ -75,7 +75,7 @@ function clickhandler(event)
   if (!post) return
 
   var handle=post.querySelector('td.handle a[href],td.handle b').textContent
-  var message=htm2tgml(post.querySelector('td.tgml div.wordwrap'))
+  var message=html2tgml(post.querySelector('td.tgml div.wordwrap'))
 
   area.value+='[quote '+handle+']'+message+'[/quote]\n'
 }
