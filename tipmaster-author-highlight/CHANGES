@@ -1,6 +1,11 @@
 0.0 - March 2012
   [+] Initial release.
 
+0.1 - March 2012
+  [*] Changed the highlight :
+    - OP posts have gradient bar on right and the word "OP" in background
+    - own posts have gradient bar on left and the word "own" in background
+
 
 
 ( Legend : [+] added, [-] removed, [*] changed, [!] fixed )
