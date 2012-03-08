@@ -1,5 +1,11 @@
-0.0 - February 2011
+0.0 - February 2012
   [+] Initial release.
+
+0.1 - February 2012
+  [*] Skip signature.
+
+0.2 - March 2012
+  [!] Extracting the code tags' title now works.
 
 
 

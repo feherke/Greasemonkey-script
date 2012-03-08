@@ -4,7 +4,7 @@
 // @description    Adds a reply link below each post to easily quote the answered message.
 // @match          http://*.tek-tips.com/viewthread.cfm?qid=*
 // @match          http://*.eng-tips.com/viewthread.cfm?qid=*
-// @version        0.0
+// @version        0.1
 // ==/UserScript==
 
 
@@ -21,7 +21,7 @@ var markup=[
   {html:'div',attr:'align',value:'center',tgml:'center',break:'c'},
   {html:'div',attr:'align',value:'right',tgml:'right',break:'c'},
   {html:'div',attr:'class',value:'spoiler',tgml:'spoiler',param:'>h4',part:/\((.+)\)/,text:'>div.body',break:'c'},
-  {html:'div',attr:'id',value:'code',tgml:'code',param:'>h4',part:/^CODE --&gt; (.+)/,text:'>div.body',break:'oCc'},
+  {html:'div',attr:'id',value:'code',tgml:'code',param:'>h4',part:/^CODE --> (.+)/,text:'>div.body',break:'oCc'},
   {html:'blockquote',tgml:'quote',param:'>h4',part:/\((.+)\)/,text:'>div.body',break:'c'},
   {html:'i'},
   {html:'u'},
@@ -40,6 +40,7 @@ var markup=[
   {html:'a',tgml:'link',param:'href'},
   {html:'img',attr:'title',tgml:'',param:'title',text:null},
   {html:'img',param:'src',text:null},
+  {html:'p',attr:'class',value:'sig',tgml:null,text:null},
   {html:'br',tgml:'',text:null,break:'o'},
 //  {tgml:'ERROR'}, // debug
   {},
