@@ -1,12 +1,12 @@
 // ==UserScript==
-// @name        TipMaster - MarkItUp Setting
+// @name        TipMaster - markItUp! Setting
 // @namespace   http://feherke.github.com/
 // @description Improved settings for the markItUp! editor.
 // @match       http://*.tek-tips.com/threadminder.cfm?pid=*
 // @match       http://*.tek-tips.com/viewthread.cfm?qid=*
 // @match       http://*.eng-tips.com/threadminder.cfm?pid=*
 // @match       http://*.eng-tips.com/viewthread.cfm?qid=*
-// @version     0.0
+// @version     0.1
 // ==/UserScript==
 
 
@@ -65,12 +65,22 @@ GM_addStyle( // box
   '.markItUp .markbbox a { background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3AUZDR0MsttS9QAAAB1pVFh0Q29tbWVudAAAAAAAQ3JlYXRlZCB3aXRoIEdJTVBkLmUHAAAAZ0lEQVQ4y9WTQQqAMAwEJ+Jb8yf72fXioYRUosGDAz20h2WypAbg7mJijGE8IQbE+x32fwMTiAb7pWGzxbEwiI8CIVClg0xToI0mJlA2QqKbjtAusbwHqoa4uxaF1U1eBUSD7HzyF07IiU/WJjSeggAAAABJRU5ErkJggg==); }'
 )
 
-GM_addStyle( // other
+GM_addStyle( // object
+  '.markItUp .marktube a { background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAIfSURBVDjLpZNPaBNBGMXfbrubzBqbg4kL0lJLgiVKE/AP6Kl6UUFQNAeDIAjVS08aELx59GQPAREV/4BeiqcqROpRD4pUNCJSS21OgloISWMEZ/aPb6ARdNeTCz92mO+9N9/w7RphGOJ/nsH+olqtvg+CYJR8q9VquThxuVz+oJTKeZ63Uq/XC38E0Jj3ff8+OVupVGLbolkzQw5HOqAxQU4wXWWnZrykmYD0QsgAOJe9hpEUcPr8i0GaJ8n2vs/sL2h8R66TpVfWTdETHWE6GRGKjGiiKNLii5BSLpN7pBHpgMYhMkm8tPUWz3sL2D1wFaY/jvnWcTTaE5DyjMfTT5J0XIAiTRYn3ASwZ1MKbTmN7z+KaHUOYqmb1fcPiNa4kQBuyvWAHYfcHGzDgYcx9NKrwJYHCAyF21JiPWBnXMAQOea6bmn+4ueYGZi8gtymNVobF7BG5prNpjd+eW6X4BSUD0gOdCpzA8MpA/v2v15kl4+pK0emwHSbjJGBlz+vYM1fQeDrYOBTdzOGvDf6EFNr+LYjHbBgsaCLxr+moNQjU2vYhRXpgIUOmSWWnsJRfjlOZhrexgtYDZ/gWbetNRbNs6QT10GJglNk64HMaGgbAkoMo5fiFNy7CKDQUGqE5r38YktxAfSqW7Zt33l66WtkAkACjuNsaLVaDxlw5HdJ/86aYrG4WCgUZD6fX+jv/U0ymfxoWVZomuZyf+8XqfGP49CCrBUAAAAASUVORK5CYII=); }'
+)
+
+GM_addStyle( // text
   '.markItUp .markmono a { background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAQAAAC1+jfqAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAACuSURBVCjPvdChDcMwFATQD4rKwgxNwypjAxNTN6hmNakMKkWKFGDqEQo6QEbICH+EjBBeXnoFUQ0MAqOjT7rTEWg/dAhInDi9Eo9TP8dvWP3LsZ31pNa228CSLskM6DMofPwbZFkzqM0yb6ADjeaJmEE+OgnSrBgEEl3Z0JsHQv73Km65GhnNHb6AlmUNgrnBFSBZ1MCbK2wBYmlq4CbLelYGBBJDw2c+DUdevZ8ffsX6A70Y4hwAAAAASUVORK5CYII=); }'+
   '.markItUp .marksmall a { background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAAFCAYAAACaTbYsAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3AUZDCc3J7sPnwAAAB1pVFh0Q29tbWVudAAAAAAAQ3JlYXRlZCB3aXRoIEdJTVBkLmUHAAAAL0lEQVQY02NggID/DAjwH42PV/4/uTQTFpNhfEY0MXQ+AxMOCUYCTmfA52yi/AwAyZsY8FEKCZUAAAAASUVORK5CYII=); }'+
-  '.markItUp .markattn a { background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAOCAYAAAAMn20lAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3AUZDC0oUFzq4AAAAB1pVFh0Q29tbWVudAAAAAAAQ3JlYXRlZCB3aXRoIEdJTVBkLmUHAAAAUklEQVQY04WQQQ6AMAzDnH2c8nJz2ugEiBxduVGLiopVHiAzEwoK97DDPoxdbxlUPWABUSHZrEBGErq1+Sqz+O74y+PAtcqdjQXO88V4e8lXxwUs91BKx+mvgAAAAABJRU5ErkJggg==); }'+
-  '.markItUp .markhide a { background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAAQCAYAAADJViUEAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3AUZDSkfjU/g3AAAAB1pVFh0Q29tbWVudAAAAAAAQ3JlYXRlZCB3aXRoIEdJTVBkLmUHAAAAjUlEQVQoz8WRyRHDIBAEG4qMyGmJacmJmMYP66AkYWPp4f5tzQzsEdxdTNBaI+dMay0A1FrB3TWDmUmSFj8AkR8xM2qtAkjcwMwAtIdD2FXpXK9zdqSDIRwDK+6+KQCllG7m/qdPdL7IA+KozSGd739tp8vzXJ2q107ht6iptpcH0nBh3+qnMwcz093wCz7HZ+tOTd9WAAAAAElFTkSuQmCC); }'+
-  '.markItUp .marktube a { background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAIfSURBVDjLpZNPaBNBGMXfbrubzBqbg4kL0lJLgiVKE/AP6Kl6UUFQNAeDIAjVS08aELx59GQPAREV/4BeiqcqROpRD4pUNCJSS21OgloISWMEZ/aPb6ARdNeTCz92mO+9N9/w7RphGOJ/nsH+olqtvg+CYJR8q9VquThxuVz+oJTKeZ63Uq/XC38E0Jj3ff8+OVupVGLbolkzQw5HOqAxQU4wXWWnZrykmYD0QsgAOJe9hpEUcPr8i0GaJ8n2vs/sL2h8R66TpVfWTdETHWE6GRGKjGiiKNLii5BSLpN7pBHpgMYhMkm8tPUWz3sL2D1wFaY/jvnWcTTaE5DyjMfTT5J0XIAiTRYn3ASwZ1MKbTmN7z+KaHUOYqmb1fcPiNa4kQBuyvWAHYfcHGzDgYcx9NKrwJYHCAyF21JiPWBnXMAQOea6bmn+4ueYGZi8gtymNVobF7BG5prNpjd+eW6X4BSUD0gOdCpzA8MpA/v2v15kl4+pK0emwHSbjJGBlz+vYM1fQeDrYOBTdzOGvDf6EFNr+LYjHbBgsaCLxr+moNQjU2vYhRXpgIUOmSWWnsJRfjlOZhrexgtYDZ/gWbetNRbNs6QT10GJglNk64HMaGgbAkoMo5fiFNy7CKDQUGqE5r38YktxAfSqW7Zt33l66WtkAkACjuNsaLVaDxlw5HdJ/86aYrG4WCgUZD6fX+jv/U0ymfxoWVZomuZyf+8XqfGP49CCrBUAAAAASUVORK5CYII=); }'
+  '.markItUp .markattn a { background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAOCAYAAAAMn20lAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3AUZDC0oUFzq4AAAAB1pVFh0Q29tbWVudAAAAAAAQ3JlYXRlZCB3aXRoIEdJTVBkLmUHAAAAUklEQVQY04WQQQ6AMAzDnH2c8nJz2ugEiBxduVGLiopVHiAzEwoK97DDPoxdbxlUPWABUSHZrEBGErq1+Sqz+O74y+PAtcqdjQXO88V4e8lXxwUs91BKx+mvgAAAAABJRU5ErkJggg==); }'
+)
+
+GM_addStyle( // block
+  '.markItUp .markhide a { background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAAQCAYAAADJViUEAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3AUZDSkfjU/g3AAAAB1pVFh0Q29tbWVudAAAAAAAQ3JlYXRlZCB3aXRoIEdJTVBkLmUHAAAAjUlEQVQoz8WRyRHDIBAEG4qMyGmJacmJmMYP66AkYWPp4f5tzQzsEdxdTNBaI+dMay0A1FrB3TWDmUmSFj8AkR8xM2qtAkjcwMwAtIdD2FXpXK9zdqSDIRwDK+6+KQCllG7m/qdPdL7IA+KozSGd739tp8vzXJ2q107ht6iptpcH0nBh3+qnMwcz093wCz7HZ+tOTd9WAAAAAElFTkSuQmCC); }'
+)
+
+GM_addStyle( // other
+  '.markItUp .markignore a { background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAALCAYAAACtWacbAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3AUaCzIfMkH4GgAAAB1pVFh0Q29tbWVudAAAAAAAQ3JlYXRlZCB3aXRoIEdJTVBkLmUHAAAAcElEQVQY042QMQ7DMAwDj0Hemr7J/ux1sFS4aYYK8EDhTArMAAEuDbeZiQAMUIqsaa0ywGNtZYJaaOn+dPDHnABJUFM3ZCbuN55UdoPcgK84lZn4KqdHqIGuYwcXlHzc3PSP01UuT/oAVidbR/068g29WEidEaeLPQAAAABJRU5ErkJggg==); }'
 )
 
 
@@ -81,7 +91,7 @@ unsafeWindow.mySettings = {
   markupSet: [
     { name: 'Bold',          openWith: '[b]',                 closeWith: '[/b]',         className: 'markb',     key: 'B' },
     { name: 'Italic',        openWith: '[i]',                 closeWith: '[/i]',         className: 'marki',     key: 'I' },
-    { name: 'Underline',     openWith: '[u]',                 closeWith: '[/u]',         className: 'marku',     key: 'U' },
+    { name: 'Underline',     openWith: '[u]',                 closeWith: '[/u]',         className: 'marku' },
     { name: 'Strikethrough', openWith: '[s]',                 closeWith: '[/s]',         className: 'marks' },
     { name: 'Superscript',   openWith: '[sup]',               closeWith: '[/sup]',       className: 'marksup' },
     { name: 'Subscript',     openWith: '[sub]',               closeWith: '[/sub]',       className: 'marksub' },
@@ -128,17 +138,16 @@ unsafeWindow.mySettings = {
       { name: 'Block',       openWith: '[bbox]',              closeWith: '[/bbox]',      className: 'markbbox' },
     ] },
     { separator: '---------------' },
-    { name: 'Picture',       replaceWith: '[img [![URL:!:http://]!]]',                             className: 'markimg' },
-
+    { name: 'Picture',       replaceWith: '[img [![URL ?:!:http://]!]]',                 className: 'markimg',   beforeInsert: function(m) { if (!m.original) m.original=m.replaceWith; if (m.selection) m.replaceWith=m.replaceWith.replace(/:!:.*\]!\]/,':!:'+m.selection+']!]') }, afterInsert: function(m) { m.replaceWith=m.original } },
     { name: 'YouTube',       openWith: '[youtube [![Movie ID?]!]]', closeWith: '[/youtube]', className: 'marktube' },
-    { name: 'Link',          openWith: '[link [![Url]!]]',    closeWith: '[/link]',      className: 'marklink',  placeHolder: 'Link' },
-    { name: 'Emoticons',     beforeInsert: function() { $('<iframe src="/tools/tgmlemotes.htm" style="width:500px;height:350px;"></iframe>').modal(); }, className: 'markemot' },
+    { name: 'Link',          openWith: '[link [![Url]!]]',    closeWith: '[/link]',      className: 'marklink',  placeHolder: 'Link Text' },
+    { name: 'Emoticons',                                                                 className: 'markemot',  beforeInsert: function() { $('<iframe src="/tools/tgmlemotes.htm" style="width:500px;height:350px;"></iframe>').modal(); } },
     { separator: '---------------' },
     { name: 'Monospaced',    openWith: '[tt]',                closeWith: '[/tt]',        className: 'markmono',  key: 'M' },
     { name: 'Small',         openWith: '[small]',             closeWith: '[/small]',     className: 'marksmall' },
     { name: 'Attention',     openWith: '[!]',                 closeWith: '[/!]',         className: 'markattn' },
     {separator:'---------------' },
-    { name: 'Bulleted list', openBlockWith: '[ul]\n',         closeBlockWith:'\n[/ul]',  openWith: '[li]', closeWith: '[/li]', className: 'markul' },
+    { name: 'Bulleted list', openBlockWith: '[ul]\n',         closeBlockWith:'\n[/ul]',  openWith: '[li]', closeWith: '[/li]', className: 'markul', key: 'U' },
     { name: 'Numeric list',  openBlockWith: '[ol [![1 I i A a ?]!]]\n', closeBlockWith:'\n[/ol]', openWith: '[li]', closeWith: '[/li]', className: 'markol' },
     { name: 'List item',     openWith: '[li]',                closeWith:'[/li]',         className: 'markli' },
     { separator:'---------------' },
@@ -146,10 +155,12 @@ unsafeWindow.mySettings = {
     { name: 'Code',          openBlockWith: '[code [![Language ?]!]]', closeBlockWith: '[/code]', className: 'markcode' },
     { name: 'Spoiler',       openBlockWith: '[spoiler [![Hint ?]!]]', closeBlockWith: '[/spoiler]', className: 'markhide' },
     { separator:'---------------' },
-    { name: 'Clean',         replaceWith: function(markitup) { return markitup.selection.replace(/\[(.*?)\]/g, '') }, className: 'clean' },
+    { name: 'Ignore',        openWith: '[ignore]',            closeWith: '[/ignore]',    className: 'markignore' },
+    { separator:'---------------' },
+    { name: 'Clean',         replaceWith: function(m) { return m.selection.replace(/\[(.*?)\]/g,'') }, className: 'clean' },
     { name: 'Preview',       call: 'preview',                                            className: 'preview' },
     { name: 'Submit Post',   call: '$("#postform").submit()',                            className: 'subpost' },
     { separator: '---------------' },
-    { name: 'Help',          call: 'openindex(450,450,"http://www.tipmaster.com/includes/tgmlinfo.cfm?w=450&h=450",1)', className: 'help' },
+    { name: 'Help',          call: 'openindex(450,450,"http://tipmaster.com/includes/tgmlinfo.cfm?w=450&h=450",1)', className: 'help' },
   ]
 }

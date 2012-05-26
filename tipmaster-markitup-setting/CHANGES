@@ -1,6 +1,11 @@
 0.0 - May 2012
   [+] Initial release.
 
+0.1 - May 2012
+  [+] Ignore button added to insert [ignore] tag.
+  [*] Key U moved from Underline button to Bulleted list button.
+  [*] Picture button now uses selection as default URL instead of overwriting it.
+
 
 
 ( Legend : [+] added, [-] removed, [*] changed, [!] fixed )
