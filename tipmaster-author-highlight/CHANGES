@@ -3,8 +3,14 @@
 
 0.1 - March 2012
   [*] Changed the highlight :
-    - OP posts have gradient bar on right and the word "OP" in background
-    - own posts have gradient bar on left and the word "own" in background
+    - OP posts have gradient bar on right and the word "OP" in background.
+    - own posts have gradient bar on left and the word "own" in background.
+
+0.2 - June 2012
+  [*] Updated according to TipMaster sites' HTML changes.
+
+0.3 - August 2012
+  [+] @grant metadata imperative according to Greasemonkey 1.0 API.
 
 
 

@@ -6,13 +6,17 @@
 // @match       http://*.tek-tips.com/viewthread.cfm?qid=*
 // @match       http://*.eng-tips.com/threadminder.cfm?pid=*
 // @match       http://*.eng-tips.com/viewthread.cfm?qid=*
-// @version     0.1
+// @version     0.4
 // ==/UserScript==
 
 
 GM_addStyle( // all
   '.markItUpHeader ul a { background-position: center center; }'+
   '.markItUpHeader ul a:hover { background-color: rgba(0,0,0,.1); }'
+)
+
+GM_addStyle( // separator
+  '.markItUpHeader ul .markItUpSeparator { margin-left: 5px; margin-right: 5px; }'
 )
 
 GM_addStyle( // color
@@ -70,30 +74,53 @@ GM_addStyle( // object
 )
 
 GM_addStyle( // text
-  '.markItUp .markmono a { background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAQAAAC1+jfqAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAACuSURBVCjPvdChDcMwFATQD4rKwgxNwypjAxNTN6hmNakMKkWKFGDqEQo6QEbICH+EjBBeXnoFUQ0MAqOjT7rTEWg/dAhInDi9Eo9TP8dvWP3LsZ31pNa228CSLskM6DMofPwbZFkzqM0yb6ADjeaJmEE+OgnSrBgEEl3Z0JsHQv73Km65GhnNHb6AlmUNgrnBFSBZ1MCbK2wBYmlq4CbLelYGBBJDw2c+DUdevZ8ffsX6A70Y4hwAAAAASUVORK5CYII=); }'+
+  '.markItUp .markpre a { background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAPCAYAAADUFP50AAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3AoJBTIf+CO6sAAAAB1pVFh0Q29tbWVudAAAAAAAQ3JlYXRlZCB3aXRoIEdJTVBkLmUHAAAAQ0lEQVQoz72RMQ4AIAgDW+P/v1xHF1SsxBsJDRdKAMKEWKPdQNlggwlNVZ706lX75b7wCrOPyF6Luq3r0VHlf1W7xwHrehUGwAc8iAAAAABJRU5ErkJggg==); }'+
   '.markItUp .marksmall a { background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAAFCAYAAACaTbYsAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3AUZDCc3J7sPnwAAAB1pVFh0Q29tbWVudAAAAAAAQ3JlYXRlZCB3aXRoIEdJTVBkLmUHAAAAL0lEQVQY02NggID/DAjwH42PV/4/uTQTFpNhfEY0MXQ+AxMOCUYCTmfA52yi/AwAyZsY8FEKCZUAAAAASUVORK5CYII=); }'+
   '.markItUp .markattn a { background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAOCAYAAAAMn20lAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3AUZDC0oUFzq4AAAAB1pVFh0Q29tbWVudAAAAAAAQ3JlYXRlZCB3aXRoIEdJTVBkLmUHAAAAUklEQVQY04WQQQ6AMAzDnH2c8nJz2ugEiBxduVGLiopVHiAzEwoK97DDPoxdbxlUPWABUSHZrEBGErq1+Sqz+O74y+PAtcqdjQXO88V4e8lXxwUs91BKx+mvgAAAAABJRU5ErkJggg==); }'
 )
 
-GM_addStyle( // block
-  '.markItUp .markhide a { background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAAQCAYAAADJViUEAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3AUZDSkfjU/g3AAAAB1pVFh0Q29tbWVudAAAAAAAQ3JlYXRlZCB3aXRoIEdJTVBkLmUHAAAAjUlEQVQoz8WRyRHDIBAEG4qMyGmJacmJmMYP66AkYWPp4f5tzQzsEdxdTNBaI+dMay0A1FrB3TWDmUmSFj8AkR8xM2qtAkjcwMwAtIdD2FXpXK9zdqSDIRwDK+6+KQCllG7m/qdPdL7IA+KozSGd739tp8vzXJ2q107ht6iptpcH0nBh3+qnMwcz093wCz7HZ+tOTd9WAAAAAElFTkSuQmCC); }'
-)
-
 GM_addStyle( // other
-  '.markItUp .markignore a { background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAALCAYAAACtWacbAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3AUaCzIfMkH4GgAAAB1pVFh0Q29tbWVudAAAAAAAQ3JlYXRlZCB3aXRoIEdJTVBkLmUHAAAAcElEQVQY042QMQ7DMAwDj0Hemr7J/ux1sFS4aYYK8EDhTArMAAEuDbeZiQAMUIqsaa0ywGNtZYJaaOn+dPDHnABJUFM3ZCbuN55UdoPcgK84lZn4KqdHqIGuYwcXlHzc3PSP01UuT/oAVidbR/068g29WEidEaeLPQAAAABJRU5ErkJggg==); }'
+  '.markItUp .markignore a { background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAMCAYAAABSgIzaAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3AUdDSs0nKfsSQAAAB1pVFh0Q29tbWVudAAAAAAAQ3JlYXRlZCB3aXRoIEdJTVBkLmUHAAAAnklEQVQoz42SUQ7DMAhDn6ueNTsTuaz3AUxpuk21FCkgTIyJAgwwbLFhKlOvJdf1BNh0lOjYNsEdAT6y0kxw1Kn4L47lrpIlHuAAkMSw19l29XzUrETbqIyIMmrYqgYEeFdyfgyxmVI6mE38aMa2fjF2TSi2RklcSAZGki6FP6WO1KtuMkCUfNKYC/kEmGlID/vt59xW1C9a0qP99axvcORKdyRlD1oAAAAASUVORK5CYII=); }'
 )
 
+GM_addStyle( // composed
+  '.markItUp .markkey a { background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAMCAYAAABr5z2BAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3AUdDSUKw0XcbAAAAB1pVFh0Q29tbWVudAAAAAAAQ3JlYXRlZCB3aXRoIEdJTVBkLmUHAAAAe0lEQVQoz6WSyw3EIAwFxyhd0Ib7oAuKogv34Z7YExLJOqBl38lYvPEHBMDMOgcqpYiYWc85n/hprZHGQVWJ4p0Sf+oLoKq4O6vO5lzamd19OdINEF1+QrcjPCGzOSqwXOIwvAEBrrdKUTxAc+765cmiXQhArbUf/kT5AH6NOufu8OjLAAAAAElFTkSuQmCC); }'+
+  '.markItUp .markoff a { background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAAICAYAAAAm06XyAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3AYGDyQaBNWDaQAAAB1pVFh0Q29tbWVudAAAAAAAQ3JlYXRlZCB3aXRoIEdJTVBkLmUHAAAATElEQVQY042PSQ4AIAgDp/z/z3gwxCWAcmEJQ4vAHQAkviOYVXRLSe/ewDGvs/VK2TurtxOUEmvl8V05QP2o3jAn+A7bLN+86sPT/gCOFSf3RktrDAAAAABJRU5ErkJggg==); }'+
+  '.markItUp .markfind a { background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAJGSURBVDjLjdJLSNRBHMDx78yqLZaKS75DPdgDDaFDbdJmde5QlhCJGxgpRJfqEEKnIsJLB7skQYQKZaSmdLaopPCgEvSCShCMzR5a7oq7/3l12RVtjfzBMA/4fWZ+MyOccwBM3g8HEbIdfCEhfAFnLVapOa28Uevpjrqz/WOsERJgsu9Uq5CZQzgqrJfo9BajNd5irEYn4p3OUiFExtCLmw2tawFi4l5zUMjMIau9u7K+qxeoAcoAA0wDb2OPwmfA16LiiaOHLj1edRLpkO3WmIis7+oBDgJbgQ2AH6gC6jY19N62RkcctKeVIJAhp9QgUA3kJXdONZVcq9JxPSgQoXRAyIDRth8oAXQyKdWnoCKrTD9CBv4GMqx1WGNZkeRWJKbG2hiD1Cb9FbTnzWFdY/LCdLKlgNQ84gyNKqHm0gDjqVHnxDHgA/B9RQkpaB6YklkZl62np9KBhOqwjpKFgeY2YAz4BESBWHI8Hhs6PVVSvc3v98ye4fP7T676B845nt040ip98qpWJmI9PWiU6bfWgXGN2YHcKwU7tsuc4kpUPMbU0+f8+vKt+Pitl7PLAMDI9cNBoB0hQwICzjqUp6MZvsy8yvp95BRuQUjJ75mPvH4wYo1NlJ64Mza7DPwrhi8cCOeXl/aUB4P4c/NJxKLMvpngycCrzxVFG2v/CwAMnguF80oLe8p27cQh+fnpPV/fTc95S6piXQDAw7a9YbWkezZXFbAwMx/xPFXb1D3+Y90AQF/L7kAsri9mZ4lrTd0TcYA/Kakr+x2JSPUAAAAASUVORK5CYII=); }'
+)
+
+GM_addStyle( // emoticon
+  '.markItUp .markemot ul a { padding-left: 50px; }'+
+  '.markItUp .emot2thumbsup a { background-image: url(http://tipmaster.com/images/2thumbsup.gif); }'+
+  '.markItUp .emot3eyes a { background-image: url(http://tipmaster.com/images/3eyes.gif); }'+
+  '.markItUp .emotbanghead a { background-image: url(http://tipmaster.com/images/banghead.gif); }'+
+  '.markItUp .emotblush a { background-image: url(http://tipmaster.com/images/blush.gif); }'+
+  '.markItUp .emotcry a { background-image: url(http://tipmaster.com/images/cry.gif); }'+
+  '.markItUp .emotflame a { background-image: url(http://tipmaster.com/images/flame.gif); }'+
+  '.markItUp .emothairpull3 a { background-image: url(http://tipmaster.com/images/hairpull3.gif); }'+
+  '.markItUp .emotmad a { background-image: url(http://tipmaster.com/images/mad.gif); }'+
+  '.markItUp .emotmedal a { background-image: url(http://tipmaster.com/images/medal.gif); }'+
+  '.markItUp .emotmorning a { background-image: url(http://tipmaster.com/images/morning.gif); }'+
+  '.markItUp .emotnosmiley a { background-image: url(http://tipmaster.com/images/nosmiley.gif); }'+
+  '.markItUp .emotpeace a { background-image: url(http://tipmaster.com/images/peace.gif); }'+
+  '.markItUp .emotponder a { background-image: url(http://tipmaster.com/images/ponder.gif); }'+
+  '.markItUp .emotsadeyes a { background-image: url(http://tipmaster.com/images/sadeyes.gif); }'+
+  '.markItUp .emotsleeping a { background-image: url(http://tipmaster.com/images/sleeping.gif); }'+
+  '.markItUp .emotthumbsup2 a { background-image: url(http://tipmaster.com/images/thumbsup2.gif); }'+
+  '.markItUp .emotupsidedown a { background-image: url(http://tipmaster.com/images/upsidedown.gif); }'
+)
 
 unsafeWindow.mySettings = {
   previewParserPath: '/tools/post.cfm',
   previewParserVar: 'post',
   resizeHandle: true,
+  onShiftEnter: { keepDefault: false, call: 'preview' },
   markupSet: [
     { name: 'Bold',          openWith: '[b]',                 closeWith: '[/b]',         className: 'markb',     key: 'B' },
     { name: 'Italic',        openWith: '[i]',                 closeWith: '[/i]',         className: 'marki',     key: 'I' },
     { name: 'Underline',     openWith: '[u]',                 closeWith: '[/u]',         className: 'marku' },
     { name: 'Strikethrough', openWith: '[s]',                 closeWith: '[/s]',         className: 'marks' },
-    { name: 'Superscript',   openWith: '[sup]',               closeWith: '[/sup]',       className: 'marksup' },
+    { name: 'Superscript',   openWith: '[sup]',               closeWith: '[/sup]',       className: 'marksup',   key: 'S' },
     { name: 'Subscript',     openWith: '[sub]',               closeWith: '[/sub]',       className: 'marksub' },
     { separator: '---------------' },
     { name: 'Color',         openWith: '[color [![Color]!]]', closeWith: '[/color]',     className: 'colors',    dropMenu: [
@@ -141,21 +168,44 @@ unsafeWindow.mySettings = {
     { name: 'Picture',       replaceWith: '[img [![URL ?:!:http://]!]]',                 className: 'markimg',   beforeInsert: function(m) { if (!m.original) m.original=m.replaceWith; if (m.selection) m.replaceWith=m.replaceWith.replace(/:!:.*\]!\]/,':!:'+m.selection+']!]') }, afterInsert: function(m) { m.replaceWith=m.original } },
     { name: 'YouTube',       openWith: '[youtube [![Movie ID?]!]]', closeWith: '[/youtube]', className: 'marktube' },
     { name: 'Link',          openWith: '[link [![Url]!]]',    closeWith: '[/link]',      className: 'marklink',  placeHolder: 'Link Text' },
-    { name: 'Emoticons',                                                                 className: 'markemot',  beforeInsert: function() { $('<iframe src="/tools/tgmlemotes.htm" style="width:500px;height:350px;"></iframe>').modal(); } },
+    { name: 'Emoticon',                                                                  className: 'markemot',  beforeInsert: function() { unsafeWindow.$('<iframe src="/tools/tgmlemotes.htm" style="width:500px;height:350px;"></iframe>').modal({overlayClose:true}) }, dropMenu: [
+      { name: '2 Thumbs Up', replaceWith: '[2thumbsup]',                                 className: 'emot2thumbsup' },
+      { name: '3 Eyes',      replaceWith: '[3eyes]',                                     className: 'emot3eyes' },
+      { name: 'Bang Head',   replaceWith: '[banghead]',                                  className: 'emotbanghead' },
+      { name: 'Blush',       replaceWith: '[blush]',                                     className: 'emotblush' },
+      { name: 'Cry',         replaceWith: '[cry]',                                       className: 'emotcry' },
+      { name: 'Flame',       replaceWith: '[flame]',                                     className: 'emotflame' },
+      { name: 'Hair Pull',   replaceWith: '[hairpull3]',                                 className: 'emothairpull3' },
+      { name: 'Mad',         replaceWith: '[mad]',                                       className: 'emotmad' },
+      { name: 'Medal',       replaceWith: '[medal]',                                     className: 'emotmedal' },
+      { name: 'Morning',     replaceWith: '[morning]',                                   className: 'emotmorning' },
+      { name: 'No Smiley',   replaceWith: '[nosmiley]',                                  className: 'emotnosmiley' },
+      { name: 'Peace',       replaceWith: '[peace]',                                     className: 'emotpeace' },
+      { name: 'Ponder',      replaceWith: '[ponder]',                                    className: 'emotponder' },
+      { name: 'Sad Eyes',    replaceWith: '[sadeyes]',                                   className: 'emotsadeyes' },
+      { name: 'Sleeping',    replaceWith: '[sleeping]',                                  className: 'emotsleeping' },
+      { name: 'Thumbs Up',   replaceWith: '[thumbsup2]',                                 className: 'emotthumbsup2' },
+      { name: 'Upside Down', replaceWith: '[upsidedown]',                                className: 'emotupsidedown' },
+    ] },
     { separator: '---------------' },
-    { name: 'Monospaced',    openWith: '[tt]',                closeWith: '[/tt]',        className: 'markmono',  key: 'M' },
+    { name: 'Monospaced',    openWith: '[tt]',                closeWith: '[/tt]',        className: 'marktt',  key: 'M' },
+    { name: 'Preformatted',  openWith: '[pre]',               closeWith: '[/pre]',       className: 'markpre'  },
     { name: 'Small',         openWith: '[small]',             closeWith: '[/small]',     className: 'marksmall' },
     { name: 'Attention',     openWith: '[!]',                 closeWith: '[/!]',         className: 'markattn' },
     {separator:'---------------' },
-    { name: 'Bulleted list', openBlockWith: '[ul]\n',         closeBlockWith:'\n[/ul]',  openWith: '[li]', closeWith: '[/li]', className: 'markul', key: 'U' },
-    { name: 'Numeric list',  openBlockWith: '[ol [![1 I i A a ?]!]]\n', closeBlockWith:'\n[/ol]', openWith: '[li]', closeWith: '[/li]', className: 'markol' },
+    { name: 'Bulleted list', openBlockWith: '[ul]\n',         closeBlockWith:'\n[/ul]',  openWith: '[li]', closeWith: '[/li]', className: 'markul', key: 'U', multiline: true },
+    { name: 'Numeric list',  openBlockWith: '[ol [![1 I i A a ?]!]]\n', closeBlockWith:'\n[/ol]', openWith: '[li]', closeWith: '[/li]', className: 'markol', multiline: true },
     { name: 'List item',     openWith: '[li]',                closeWith:'[/li]',         className: 'markli' },
     { separator:'---------------' },
-    { name: 'Quotes',        openBlockWith: '[quote [![Who ?]!]]', closeBlockWith:'[/quote]', className: 'markquote '},
-    { name: 'Code',          openBlockWith: '[code [![Language ?]!]]', closeBlockWith: '[/code]', className: 'markcode' },
-    { name: 'Spoiler',       openBlockWith: '[spoiler [![Hint ?]!]]', closeBlockWith: '[/spoiler]', className: 'markhide' },
+    { name: 'Quotes',        openWith: '[quote [![Who ?]!]]', closeWith:'[/quote]',      className: 'markquote' },
+    { name: 'Code',          openWith: '[code [![Language ?]!]]', closeWith: '[/code]',  className: 'markcode' },
+    { name: 'Spoiler',       openWith: '[spoiler [![Hint ?]!]]', closeWith: '[/spoiler]', className: 'markspoil' },
     { separator:'---------------' },
     { name: 'Ignore',        openWith: '[ignore]',            closeWith: '[/ignore]',    className: 'markignore' },
+    { separator:'---------------' },
+    { name: 'Key',           replaceWith: function(m) { if (s=m.selection||prompt('Key(s) ?')) return s.split(/\s+/).map(function(o) { return '[color silver gainsboro][box][black]'+o+'[/black][/box][/color]' }).join('-') }, className: 'markkey' },
+    { name: 'Off Topic',     openBlockWith: '[tt][blue][small][off-topic][/small][/blue][/tt]\n', closeBlockWith: '\n[tt][blue][small][/off-topic][/small][/blue][/tt]', className: 'markoff', placeHolder: 'Off Topic' },
+    { name: 'Web Search',    replaceWith: function(m) { if (s=m.selection||prompt('Term ?')) return '[link http://google.com/search?q='+encodeURIComponent(s)+']search the web for "'+s+'"[/link]' }, className: 'markfind' },
     { separator:'---------------' },
     { name: 'Clean',         replaceWith: function(m) { return m.selection.replace(/\[(.*?)\]/g,'') }, className: 'clean' },
     { name: 'Preview',       call: 'preview',                                            className: 'preview' },

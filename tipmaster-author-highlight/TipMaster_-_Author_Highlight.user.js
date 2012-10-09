@@ -4,7 +4,8 @@
 // @description    Highlights the OP's and own messages in a thread.
 // @match          http://*.tek-tips.com/viewthread.cfm?qid=*
 // @match          http://*.eng-tips.com/viewthread.cfm?qid=*
-// @version        0.1
+// @grant          GM_addStyle
+// @version        0.3
 // ==/UserScript==
 
 
@@ -19,9 +20,9 @@ GM_addStyle('.tgml blockquote { border-color: rgba(205,205,255,.66); !important;
 GM_addStyle('blockquote { background-color: rgba(238,238,255,.75) !important; }')
 GM_addStyle('.tgml blockquote h4 { background-color: transparent !important; }')
 
-GM_addStyle('div#code { border-color: rgba(0,0,0,.66); }')
-GM_addStyle('div#code .body { background-color: rgba(255,255,255,.75) !important; }')
-GM_addStyle('.tgml div#code h4 { background-color: rgba(119,119,119,.75) !important; }')
+GM_addStyle('div.code { border-color: rgba(0,0,0,.66); }')
+GM_addStyle('div.code .body { background-color: rgba(255,255,255,.75) !important; }')
+GM_addStyle('.tgml div.code h4 { background-color: rgba(119,119,119,.75) !important; }')
 
 GM_addStyle('div.spoiler { background-color: transparent !important; border-color: rgba(0,0,0,.66); }')
 GM_addStyle('div.spoiler .body { color: transparent !important; background-color: rgba(255,255,255,.75) !important; }')

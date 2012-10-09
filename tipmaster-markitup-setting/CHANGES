@@ -6,6 +6,20 @@
   [*] Key U moved from Underline button to Bulleted list button.
   [*] Picture button now uses selection as default URL instead of overwriting it.
 
+0.2 - June 2012
+  [*] Ignore button's icon redesigned.
+  [+] New composite buttons Key, Off Topic and Web Search.
+  [+] Key Shift-Enter assigned to Preview action.
+  [+] Key S assigned to the Superscript button.
+  [*] Bullet List, Numbered List, Code, Quote and Spoiler buttons updated according to markItUp! 1.1.x.
+
+0.3 - September 2012
+  [*] Spoiler button's icon is now the "official" gift box icon.
+  [+] Emoticon button now has a drow down list with the icons I used most frequently.
+
+0.4 - October 2012
+  [+] Preformatted button for the new [pre] tag.
+
 
 
 ( Legend : [+] added, [-] removed, [*] changed, [!] fixed )

@@ -4,7 +4,7 @@
 // @description    Adds a reply link below each post to easily quote the answered message.
 // @match          http://*.tek-tips.com/viewthread.cfm?qid=*
 // @match          http://*.eng-tips.com/viewthread.cfm?qid=*
-// @version        0.1
+// @version        0.5
 // ==/UserScript==
 
 
@@ -21,8 +21,14 @@ var markup=[
   {html:'div',attr:'align',value:'center',tgml:'center',break:'c'},
   {html:'div',attr:'align',value:'right',tgml:'right',break:'c'},
   {html:'div',attr:'class',value:'spoiler',tgml:'spoiler',param:'>h4',part:/\((.+)\)/,text:'>div.body',break:'c'},
-  {html:'div',attr:'id',value:'code',tgml:'code',param:'>h4',part:/^CODE --> (.+)/,text:'>div.body',break:'oCc'},
+  {html:'div',attr:'class',value:'code',tgml:'code',param:'>h4',part:/^CODE --> (.+)/,text:'>div.body',break:'oCc'},
+  {html:'div',attr:'id',value:'code',tgml:'code',param:'>h4',part:/^CODE --> (.+)/,text:'>div.body',break:'oCc'}, /* backward compatibility */
+  {html:'div',attr:'class',value:'left',tgml:'floatl'},
+  {html:'div',attr:'class',value:'right',tgml:'floatr'},
+  {html:'div',attr:'class',value:'box',tgml:'bbox'},
+  {html:'div',attr:'class',value:'indent',tgml:'indent'},
   {html:'blockquote',tgml:'quote',param:'>h4',part:/\((.+)\)/,text:'>div.body',break:'c'},
+  {html:'b'},
   {html:'i'},
   {html:'u'},
   {html:'s'},
@@ -36,12 +42,16 @@ var markup=[
   {html:'span',attr:'style',value:/color:([#\w]+).+color:([#\w]+)/,tgml:'color',param:'~'},
   {html:'span',attr:'style',value:/(?:^|[^-])color:([#\w]+)/,tgml:'color',param:'~'},
   {html:'span',attr:'style',value:/background-color:([#\w]+)/,tgml:'highlight',param:'~'},
+  {html:'span',attr:'class',value:'box',tgml:'box'},
+  {html:'span',attr:'class',value:'ignore',tgml:'ignore'},
+  {html:'pre',attr:'class',value:'pre'},
   {html:'a',attr:'@',value:/^((?:forum|thread|FAQ|link).+?):/,tgml:'',param:'~',text:null},
   {html:'a',tgml:'link',param:'href'},
   {html:'img',attr:'title',tgml:'',param:'title',text:null},
   {html:'img',param:'src',text:null},
-  {html:'p',attr:'class',value:'sig',tgml:null,text:null},
   {html:'br',tgml:'',text:null,break:'o'},
+  {html:'p',attr:'class',value:'sig',tgml:null,text:null},
+  {html:'wbr',tgml:null},
 //  {tgml:'ERROR'}, // debug
   {},
 ]
@@ -156,3 +166,39 @@ function html2tgml(what)
 
   return result
 }
+
+
+/*
+
+Markup conversion data description
+
+The markup array's items are conversion rules. The first matching rule is executed, the remaining are skipped.
+
+Each rule may contain the following fields :
+  - html - HTML tag name, if specified, the given attibute must be set
+  - attr - HTML tag attribute name, if specified, the given attibute must be set; may be
+    '@' - HTML tag text content, not attribute
+    anything else - HTML tag attribute name
+  - value - HTML tag attribute value, if specified, the value is verified; may be of type
+    string - the value must be the same; exception is the class attribute, which must contain the value
+    regular expression - the value must match, captured substrings are kept for later
+  - tgml - TGML tag name, if missing, is considered identical with the HTML tag name; may be
+    null - no proper tag, no delimiting brackets
+    anything else - is considered TGML tag name
+  - param - TGML tag attribute value; may be
+    '>' + selector - content of the specified child node
+    '~' - substrings captured while matching the HTML tag attribute value against the value regular expression
+    '@' - HTML tag text content
+    anything else - is considered HTML tag attribute name
+  - part - regular expression matching the part of param to extract as TGML attribute value
+  - text - TGML tag content, may be
+    '>' + selector - content of the specified child node
+    null - no content and no closing TGML tag
+    anything else - is considered fixed string content
+  - break - where to insert line break around the TGML tag; may contain the letters
+    'O' - before open tag
+    'o' - after open tag
+    'C' - before close tag
+    'c' - after close tag
+
+*/

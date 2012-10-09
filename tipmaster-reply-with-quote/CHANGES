@@ -5,7 +5,19 @@
   [*] Skip signature.
 
 0.2 - March 2012
-  [!] Extracting the code tags' title now works.
+  [!] Extracting the [code] tags' title now works.
+
+0.3 - March 2012
+  [!] Consume pointless wbr tags.
+
+0.4 - June 2012
+  [*] Updated according to TipMaster sites' HTML changes.
+  [+] Recognizes the new [box], [bbox], [floatl], [floatr] and [indent] TGML tags.
+  [+] Handles [ignore] tag.
+  [!] Excludes signature.
+
+0.5 - October 2012
+  [+] Recognizes the new [pre] TGML tag.
 
 
 

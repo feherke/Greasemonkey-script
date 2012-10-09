@@ -1,3 +1,2 @@
-* Implement adding the [ignore] tag.
 * Make difference between [spoiler] and [hide] tags.
 * Provide a way to convert to lighter markup, like *bold* instead of [b]bold[/b].
