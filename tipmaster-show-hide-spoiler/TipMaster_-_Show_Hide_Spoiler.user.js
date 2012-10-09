@@ -8,7 +8,7 @@
 // ==/UserScript==
 
 
-GM_addStyle('div.spoiler h4 a { float: right; color: #930; background-color: pink; padding-left: 5px; padding-right: 5px; }')
+GM_addStyle('a.gm_spoiler { float: right; color: #930; background-color: pink; padding-left: 5px; padding-right: 5px; }')
 
 
 var list=document.querySelectorAll('div.spoiler h4')
@@ -43,7 +43,7 @@ function clickhandler(event)
   link.hash=link.hash=='#1'?'':'#1'
 
   link.textContent=link.hash?'hide':'show'
-  link.title=link.textContent+' this spoiler\'s content'
+  link.title=link.textContent[0].toUpperCase()+link.textContent.substr(1)+' this spoiler\'s content'
 
   spoiler.style.setProperty('color',link.hash?'#930':'transparent','important')
 }
