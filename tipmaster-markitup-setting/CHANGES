@@ -15,10 +15,21 @@
 
 0.3 - September 2012
   [*] Spoiler button's icon is now the "official" gift box icon.
-  [+] Emoticon button now has a drow down list with the icons I used most frequently.
+  [+] Emoticon button now has a drop down list with the icons I used most frequently.
 
 0.4 - October 2012
   [+] Preformatted button for the new [pre] tag.
+
+0.5 - October 2012
+  [*] Ignore button's icon is now the "official" red bracket icon.
+  [!] Left, Center and Right button's icons now correctly represent the alignment type.
+  [*] Preformatted button's icon redesigned.
+  [*] Off Topic button renamed to Fake TGML, functionality removed.
+  [+] Fake TGML button now has a drop-down list with Off Topic and Flame buttons to insert the given fake markup.
+  [*] Web Search button renamed to TipMaster Search, links to current TipMaster site's own search engine.
+  [+] TipMaster Search button now has a drop-down list with Google Search, Yahoo! Search and Lycos Search buttons to various web searches.
+  [+] New composite button Documentation with drop-down buttons Perl, PHP, Tcl and Tk.
+  [+] New composite button Canned Response.
 
 
 
