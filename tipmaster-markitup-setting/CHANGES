@@ -15,7 +15,7 @@
 
 0.3 - September 2012
   [*] Spoiler button's icon is now the "official" gift box icon.
-  [+] Emoticon button now has a drop down list with the icons I used most frequently.
+  [+] Emoticon button now has a drop-down list with the icons I used most frequently.
 
 0.4 - October 2012
   [+] Preformatted button for the new [pre] tag.
@@ -30,6 +30,19 @@
   [+] TipMaster Search button now has a drop-down list with Google Search, Yahoo! Search and Lycos Search buttons to various web searches.
   [+] New composite button Documentation with drop-down buttons Perl, PHP, Tcl and Tk.
   [+] New composite button Canned Response.
+
+0.6 - October 2012
+  [*] Monospace button moved near the text attribute buttons.
+  [*] Highlight button's icon is now the "official" marker icon.
+  [+] New List button with drop-down containig Bulleted list, Numeric list and List item buttons.
+  [*] Ignore button moved near the Clean button.
+  [*] Key button changed to insert [kbd] tag instead of composite tag set.
+  [*] Key button moved near the text buttons.
+  [*] @grant metadata imperative according to Greasemonkey 1.0 API.
+
+0.7 - March 2013
+  [*] Emoticon, Help and Submit Post buttons now call the same functions as the "official" ones.
+  [*] Minor adjustment on the forbidden activities list to not wrap.
 
 
 

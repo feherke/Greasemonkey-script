@@ -6,9 +6,19 @@
 // @match       http://*.tek-tips.com/viewthread.cfm?qid=*
 // @match       http://*.eng-tips.com/threadminder.cfm?pid=*
 // @match       http://*.eng-tips.com/viewthread.cfm?qid=*
-// @version     0.5
+// @grant       GM_addStyle
+// @grant       GM_setValue
+// @grant       GM_getValue
+// @grant       GM_deleteValue
+// @grant       GM_listValues
+// @grant       unsafeWindow
+// @version     0.7
 // ==/UserScript==
 
+
+GM_addStyle( // toolbar
+  '.markItUpHeader { padding-top: 0; }'
+)
 
 GM_addStyle( // all
   '.markItUpHeader ul a { background-position: center center; }'+
@@ -16,7 +26,7 @@ GM_addStyle( // all
 )
 
 GM_addStyle( // separator
-  '.markItUpHeader ul .markItUpSeparator { margin-left: 5px; margin-right: 5px; }'
+  '.markItUpHeader ul .markItUpSeparator { height: .9em; margin: 5px; }'
 )
 
 GM_addStyle( // color
@@ -41,7 +51,7 @@ GM_addStyle( // color
 )
 
 GM_addStyle( // highlight
-  '.markItUp .hilite a { background-color: rgba(255,255,0,.5); background-image: url(/js/markitup/sets/bbcode/images/color.png); }'+
+  '.markItUp .hilite a { background-image: url(/js/markitup/sets/bbcode/images/highlight.png); }'+
   '.markItUp .hilite ul { width: 81px; padding: 1px !important; }'+
   '.markItUp .hilite li { float: left !important; width: 25px !important; height: 25px !important; overflow: hidden; border-style: solid !important; border-color: white !important; border-width: 1px !important; padding: 0; margin: 0; }'+
   '.markItUp .hilite li a { background-image: none; }'+
@@ -66,6 +76,13 @@ GM_addStyle( // float
   '.markItUp .markfright a { background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAQAAAC1+jfqAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAChSURBVCjPY/zPgB8wMVCqgAVEFP7/w/CH4TcY/gLh59ul9oLtdmZk+I8D7vn/4f+e//8hJqT/h+kGwqu/GA7oQIz/D7NiJiM22/8j3BD9/xdMPwQ+vyL1n+EfEEIVLGXEph9Jge9/JN1XfzPcAbrhH8NfhILNWEz4h2yCPZIJYP88fyf1D9mRB7G6AUmBAdQXYN1X/zB8AYfDebACRopjEwDsBmruXDxiUwAAAABJRU5ErkJggg==); }'
 )
 
+GM_addStyle( // list
+  '.markItUp .marklist a { background-image: url(/js/markitup/sets/bbcode/images/list-bullet.png); }'+
+  '.markItUp .markul a { background-image: url(/js/markitup/sets/bbcode/images/list-bullet.png); }'+
+  '.markItUp .markol a { background-image: url(/js/markitup/sets/bbcode/images/list-numeric.png); }'+
+  '.markItUp .markli a { background-image: url(/js/markitup/sets/bbcode/images/list-item.png); }'
+)
+
 GM_addStyle( // box
   '.markItUp .markbox a { background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAALCAYAAACtWacbAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3AUZDRkaImMioAAAAB1pVFh0Q29tbWVudAAAAAAAQ3JlYXRlZCB3aXRoIEdJTVBkLmUHAAAAVElEQVQY041QbQ5AIQhC11np/iegP9qr9fXYGrYATRMgPFCC7aKRZ1VJ2aCuZO/gO+sSK0BpYbiTFe9dlIfkdF9EzyQOg2JOlOMHLJZ53VP5PnlGA9fcN61NqaLZAAAAAElFTkSuQmCC); }'+
   '.markItUp .markibox a { background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAAJCAYAAADtj3ZXAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3AUZDRwskK5DfAAAAB1pVFh0Q29tbWVudAAAAAAAQ3JlYXRlZCB3aXRoIEdJTVBkLmUHAAAAcElEQVQoz6WRUQ6AIAxDO+NZy5noZeuHDAnBSGI/37bSscAkA8ZaERM4SfZmSVmP0ni9mQtpPHWQNMZhkjbgL5b8wKaqFGlA0pLi7BFa7Pq+M9QMcr0joQbnN+Vg9m3HLsOLabCMXaXA9NvL2/258wUFRlc0p5TnxgAAAABJRU5ErkJggg==); }'+
@@ -79,11 +96,11 @@ GM_addStyle( // object
 GM_addStyle( // text
   '.markItUp .markpre a { background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAAQCAYAAADAvYV+AAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3AoMESoRsXH0cAAAAB1pVFh0Q29tbWVudAAAAAAAQ3JlYXRlZCB3aXRoIEdJTVBkLmUHAAAAWElEQVQoz7XQwQ2AMAxD0UdZhE1g86zCJuFUDqiirQSWcoiUWPZf9JUmlVBmPoo/lQjsL3udu2082keLxqhzk2PXubVnK/PntCDXgeMDJ7ZZ964qxpjKfAHtgyUfSIOzJAAAAABJRU5ErkJggg==); }'+
   '.markItUp .marksmall a { background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAAFCAYAAACaTbYsAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3AUZDCc3J7sPnwAAAB1pVFh0Q29tbWVudAAAAAAAQ3JlYXRlZCB3aXRoIEdJTVBkLmUHAAAAL0lEQVQY02NggID/DAjwH42PV/4/uTQTFpNhfEY0MXQ+AxMOCUYCTmfA52yi/AwAyZsY8FEKCZUAAAAASUVORK5CYII=); }'+
-  '.markItUp .markattn a { background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAOCAYAAAAMn20lAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3AUZDC0oUFzq4AAAAB1pVFh0Q29tbWVudAAAAAAAQ3JlYXRlZCB3aXRoIEdJTVBkLmUHAAAAUklEQVQY04WQQQ6AMAzDnH2c8nJz2ugEiBxduVGLiopVHiAzEwoK97DDPoxdbxlUPWABUSHZrEBGErq1+Sqz+O74y+PAtcqdjQXO88V4e8lXxwUs91BKx+mvgAAAAABJRU5ErkJggg==); }'
+  '.markItUp .markattn a { background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAOCAYAAAAMn20lAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3AUZDC0oUFzq4AAAAB1pVFh0Q29tbWVudAAAAAAAQ3JlYXRlZCB3aXRoIEdJTVBkLmUHAAAAUklEQVQY04WQQQ6AMAzDnH2c8nJz2ugEiBxduVGLiopVHiAzEwoK97DDPoxdbxlUPWABUSHZrEBGErq1+Sqz+O74y+PAtcqdjQXO88V4e8lXxwUs91BKx+mvgAAAAABJRU5ErkJggg==); }'+
+  '.markItUp .markkbd a { background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAMCAYAAABr5z2BAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3AUdDSUKw0XcbAAAAB1pVFh0Q29tbWVudAAAAAAAQ3JlYXRlZCB3aXRoIEdJTVBkLmUHAAAAe0lEQVQoz6WSyw3EIAwFxyhd0Ib7oAuKogv34Z7YExLJOqBl38lYvPEHBMDMOgcqpYiYWc85n/hprZHGQVWJ4p0Sf+oLoKq4O6vO5lzamd19OdINEF1+QrcjPCGzOSqwXOIwvAEBrrdKUTxAc+765cmiXQhArbUf/kT5AH6NOufu8OjLAAAAAElFTkSuQmCC); }'
 )
 
 GM_addStyle( // composed
-  '.markItUp .markkey a { background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAMCAYAAABr5z2BAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3AUdDSUKw0XcbAAAAB1pVFh0Q29tbWVudAAAAAAAQ3JlYXRlZCB3aXRoIEdJTVBkLmUHAAAAe0lEQVQoz6WSyw3EIAwFxyhd0Ib7oAuKogv34Z7YExLJOqBl38lYvPEHBMDMOgcqpYiYWc85n/hprZHGQVWJ4p0Sf+oLoKq4O6vO5lzamd19OdINEF1+QrcjPCGzOSqwXOIwvAEBrrdKUTxAc+765cmiXQhArbUf/kT5AH6NOufu8OjLAAAAAElFTkSuQmCC); }'+
   '.markItUp .markfake a { background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAAPCAYAAAA71pVKAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3AoPEA47iFUZ2QAAAB1pVFh0Q29tbWVudAAAAAAAQ3JlYXRlZCB3aXRoIEdJTVBkLmUHAAABwElEQVQoz4XTv2tTURQH8E9eWkkTq1JSsVChghSHOoi4SV82F7u6dOjgUHTSxcVNcBF0101F6KSDf4AvdFAQqaggaKsWixZrUWtNmjTJdUjTvojoFy6cc+653/OD7xVCiMMO0vb//DhCIo1ymUymKySTace7kQghhJAkO8yE7RNCHOK420/ltx8TQpIEeDl73MTjSy7evunDDVZmmBsn5EdBSJIOUZCuBFc3JsHCuYz5a3y+w/IFyv3tXtP5EUqdIYL3LufueTrVI7cnyA0TfrFriMETnL8ynZ65FN1iexOZFyOenDmgWGhoHKNvnZ4aay2KR5h6d3dnh5SjDguMLzywv76sd5TCDyoVslWaVTb3UpyoS+dH8Oz+6TKMPb8OWnla39hVoV6jr4oa2fkGeHNKeebsUdmHxGvR28XiK8nY2sfFzTz5YRpVGjVqFbI1mj8Js+xbknxtWowffYkzW1suLU0rr75m92H6h2jWiQ7SWiUs0vhEc6Xd86E5MZJIkkCyvsLgSQpFmhvkvrM5QmGSTK1doWeA3oEtdSWJtMLijli67I6y/rS3FdaRZlqmf/sQHeItdIlEHPsnuu9LvwFfSHBLFIuO3QAAAABJRU5ErkJggg==); }'+
   '.markItUp .markoff a { background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAAJCAYAAADtj3ZXAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3AoPEBIbVUxkTAAAAB1pVFh0Q29tbWVudAAAAAAAQ3JlYXRlZCB3aXRoIEdJTVBkLmUHAAAAWUlEQVQoz6WRwQ3AIAwDLywG+y/lPgothBKQmg9YcLKTGEgAYMZxNea9+A/5flNeaEWwdmdaO7Xy7Qw6cuhTzTq5qD67RbqHS6XLIfvE+XD2gxwiA5L92fMFqkVCznBaRuoAAAAASUVORK5CYII=); }'+
   '.markItUp .markfire a { background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3AoPEBo7pvvOjAAAAB1pVFh0Q29tbWVudAAAAAAAQ3JlYXRlZCB3aXRoIEdJTVBkLmUHAAACeUlEQVQ4y5WSS0hUcRTGf///vTPNy0EbH6RGhdUiCUESJAqjh0Qbe0EQRYskkYiKIqJVBpm1sk2UUKARRGDSRoI2PQh6QGkEtpCklHEadcbXzHjnztzTImaw0EUfnNU534/vHA4so59Pufqtj5sAk238v76849hYH9mJDnoBPtG05JxeDvD+MxG/BTLNwcGNq1trebY04B5IrgCG2v80GmN0xuOk8ZOJ+Udvy35CpzgFwF+enHGxIi10Dl1Eoj2kog9If6xH3teYnbn+YtBfK9wpRsdP05z0cta3CdvOomUCp6SebLA0cxigo3Zf+T3p4tbzf27QxBUObjabRuLcLarGVhnEFUOyBtpbAvgJTnZxctu1/kcPX7Pl0t4/PjMH6GlpZ3iYu6UbYNYAlYIMGCTAtqCgGh1ew4W1/VTV+GgHGvMJXhxla/I+q6bclHj9yIo4jjGHlhRkF8CZAeXBVfqEKqsXd/wNe74eZ2c+QeAnR2LFNBdboEGySQydBlKIN4lOK5S8xkyG0baC+A9wR9iRT1AYgsIDuCsrcKYSKDUFYiNTl4lYNo4VRc9ZaMcLZgAKDNAxXZQHpCZBuUGXQDCCcqXRMwEoUhR6GtAK8PrBFQJPOSwoyCYK4nmAkYDMZ8zpDxjZ7xhjYfTK7ZiiCKhdKHcd4lSCax1kQmBnYLjC6csDLMFJJYA0iA1luxFPGVI0jsz/QhkbIFCB+HwwNwrzMboPfZ8dyB+xso63CR+yMML54HrErEISYZQSCM4gc7MocwVEwxAe4FUgc6L1DCcEQC1+5YY2rnuTnHMKcHkN0mnB7Qg4UdT4S8Lzg5U3HstYd70ilfP8BmmpA1Av9C+KAAAAAElFTkSuQmCC); }'+
@@ -118,6 +135,10 @@ GM_addStyle( // emoticon
   '.markItUp .emotsleeping a { background-image: url(http://tipmaster.com/images/sleeping.gif); }'+
   '.markItUp .emotthumbsup2 a { background-image: url(http://tipmaster.com/images/thumbsup2.gif); }'+
   '.markItUp .emotupsidedown a { background-image: url(http://tipmaster.com/images/upsidedown.gif); }'
+)
+
+GM_addStyle( // forbidden
+  'label[for="post"]+span { float: right; margin-left: 0 !important; }'
 )
 
 // web search object
@@ -169,6 +190,8 @@ for (var i=0,l=stored.length;i<l;i++) {
   cannedresponse.menu.push({name:stored[i],replaceWith:cannedresponse.insert,className:'response'})
 }
 
+var $=unsafeWindow.$
+
 unsafeWindow.mySettings = {
   previewParserPath: '/tools/post.cfm',
   previewParserVar: 'post',
@@ -181,6 +204,7 @@ unsafeWindow.mySettings = {
     { name: 'Strikethrough', openWith: '[s]',                 closeWith: '[/s]',         className: 'marks' },
     { name: 'Superscript',   openWith: '[sup]',               closeWith: '[/sup]',       className: 'marksup',   key: 'S' },
     { name: 'Subscript',     openWith: '[sub]',               closeWith: '[/sub]',       className: 'marksub' },
+    { name: 'Monospace',     openWith: '[tt]',                closeWith: '[/tt]',        className: 'marktt',  key: 'M' },
     { separator: '---------------' },
     { name: 'Color',         openWith: '[color [![Color]!]]', closeWith: '[/color]',     className: 'colors',    dropMenu: [
       { name: 'Black',       openWith: '[black]',             closeWith: '[/black]',     className: 'col1-1' },
@@ -218,6 +242,11 @@ unsafeWindow.mySettings = {
       { name: 'Left',        openWith: '[floatl]',            closeWith: '[/floatl]',    className: 'markfleft' },
       { name: 'Right',       openWith: '[floatr]',            closeWith: '[/floatr]',    className: 'markfright' },
     ] },
+    { name: 'List',                                                                      className: 'marklist', dropMenu: [
+      { name: 'Bulleted list', openBlockWith: '[ul]\n',       closeBlockWith:'\n[/ul]',  openWith: '[li]', closeWith: '[/li]', className: 'markul', key: 'U', multiline: true },
+      { name: 'Numeric list', openBlockWith: '[ol [![1 I i A a ?]!]]\n', closeBlockWith:'\n[/ol]', openWith: '[li]', closeWith: '[/li]', className: 'markol', multiline: true },
+      { name: 'List item',   openWith: '[li]',                closeWith:'[/li]',         className: 'markli' },
+    ] },
     { name: 'Indent',        openWith: '[indent]',            closeWith: '[/indent]',    className: 'markindent' },
     { name: 'Box',                                                                       className: 'markbox',   dropMenu: [
       { name: 'Inline',      openWith: '[box]',               closeWith: '[/box]',       className: 'markibox' },
@@ -225,9 +254,9 @@ unsafeWindow.mySettings = {
     ] },
     { separator: '---------------' },
     { name: 'Picture',       replaceWith: '[img [![URL ?:!:http://]!]]',                 className: 'markimg',   beforeInsert: function(m) { if (!m.original) m.original=m.replaceWith; if (m.selection) m.replaceWith=m.replaceWith.replace(/:!:.*\]!\]/,':!:'+m.selection+']!]') }, afterInsert: function(m) { m.replaceWith=m.original } },
-    { name: 'YouTube',       openWith: '[youtube [![Movie ID?]!]]', closeWith: '[/youtube]', className: 'marktube' },
+    { name: 'YouTube',       replaceWith: '[youtube [![Movie ID?]!]]',                   className: 'marktube' },
     { name: 'Link',          openWith: '[link [![Url]!]]',    closeWith: '[/link]',      className: 'marklink',  placeHolder: 'Link Text' },
-    { name: 'Emoticons',                                                                 className: 'markemot',  beforeInsert: function() { unsafeWindow.$('<iframe src="/tools/tgmlemotes.htm" style="width:500px;height:350px;"></iframe>').modal({overlayClose:true}) }, dropMenu: [
+    { name: 'Emoticons',                                                                 className: 'markemot', beforeInsert: function(m) { var inf=m; $('#postpop').dialog({ modal: true, position: { my: 'center', at: 'center', of: window }, autoOpen: true, open: function() { $(this).load('/tools/tgmlemotes.cfm?pos='+inf.caretPosition) }, width: 600, height: 430, title: 'Emoticons' }) }, dropMenu: [
       { name: '2 Thumbs Up', replaceWith: '[2thumbsup]',                                 className: 'emot2thumbsup' },
       { name: '3 Eyes',      replaceWith: '[3eyes]',                                     className: 'emot3eyes' },
       { name: 'Bang Head',   replaceWith: '[banghead]',                                  className: 'emotbanghead' },
@@ -247,22 +276,15 @@ unsafeWindow.mySettings = {
       { name: 'Upside Down', replaceWith: '[upsidedown]',                                className: 'emotupsidedown' },
     ] },
     { separator: '---------------' },
-    { name: 'Monospaced',    openWith: '[tt]',                closeWith: '[/tt]',        className: 'marktt',  key: 'M' },
     { name: 'Preformatted',  openWith: '[pre]',               closeWith: '[/pre]',       className: 'markpre'  },
     { name: 'Small',         openWith: '[small]',             closeWith: '[/small]',     className: 'marksmall' },
     { name: 'Attention',     openWith: '[!]',                 closeWith: '[/!]',         className: 'markattn' },
+    { name: 'Key',           openWith: '[kbd]',               closeWith: '[/kbd]',       className: 'markkbd' },
     {separator:'---------------' },
-    { name: 'Bulleted list', openBlockWith: '[ul]\n',         closeBlockWith:'\n[/ul]',  openWith: '[li]', closeWith: '[/li]', className: 'markul', key: 'U', multiline: true },
-    { name: 'Numeric list',  openBlockWith: '[ol [![1 I i A a ?]!]]\n', closeBlockWith:'\n[/ol]', openWith: '[li]', closeWith: '[/li]', className: 'markol', multiline: true },
-    { name: 'List item',     openWith: '[li]',                closeWith:'[/li]',         className: 'markli' },
-    { separator:'---------------' },
-    { name: 'Quotes',        openWith: '[quote [![Who ?]!]]', closeWith:'[/quote]',      className: 'markquote' },
+    { name: 'Quote',         openWith: '[quote [![Who ?]!]]', closeWith:'[/quote]',      className: 'markquote' },
     { name: 'Code',          openWith: '[code [![Language ?]!]]', closeWith: '[/code]',  className: 'markcode' },
     { name: 'Spoiler',       openWith: '[spoiler [![Hint ?]!]]', closeWith: '[/spoiler]', className: 'markspoil' },
     { separator:'---------------' },
-    { name: 'Ignore',        openWith: '[ignore]',            closeWith: '[/ignore]',    className: 'markignore' },
-    { separator:'---------------' },
-    { name: 'Key',           replaceWith: function(m) { var s=m.selection; if (s||(s=prompt('Key(s) ?'))) return s.split(/\s+/).map(function(o) { return '[color silver gainsboro][box][black]'+o+'[/black][/box][/color]' }).join('-') }, className: 'markkey' },
     { name: 'Fake TGML',                                                                 className: 'markfake', dropMenu: [
       { name: 'Off Topic',   openBlockWith: '[tt][blue][small][off-topic][/small][/blue][/tt]\n', closeBlockWith: '\n[tt][blue][small][/off-topic][/small][/blue][/tt]', className: 'markoff', placeHolder: 'Off Topic' },
       { name: 'Flame',       openBlockWith: '[tt][red][small][ignore][flame][/ignore][/small][/red][/tt]\n', closeBlockWith: '\n[tt][red][small][/flame][/small][/red][/tt]', className: 'markfire', placeHolder: 'Flame' },
@@ -273,17 +295,20 @@ unsafeWindow.mySettings = {
       { name: 'Tcl',         replaceWith: documentation.link,                            className: 'markdoctcltk' },
       { name: 'Tk',          replaceWith: documentation.link,                            className: 'markdoctcltk' },
     ] },
-    { name: 'TipMaster Search',replaceWith: websearch.search,                            className: 'markfind', dropMenu: [
+    { name: 'TipMaster Search', replaceWith: websearch.search,                           className: 'markfind', dropMenu: [
       { name: 'Google',      replaceWith: websearch.search,                              className: 'markfindgoogle' },
       { name: 'Yahoo!',      replaceWith: websearch.search,                              className: 'markfindyahoo' },
       { name: 'Lycos',       replaceWith: websearch.search,                              className: 'markfindlycos' },
     ] },
-    { name: 'Canned Response',replaceWith: cannedresponse.save,                          className: 'markcan', dropMenu: cannedresponse.menu },
+    { name: 'Canned Response', replaceWith: cannedresponse.save,                         className: 'markcan', dropMenu: cannedresponse.menu },
     { separator:'---------------' },
+    { name: 'Ignore',        openWith: '[ignore]',            closeWith: '[/ignore]',    className: 'markignore' },
     { name: 'Clean',         replaceWith: function(m) { return m.selection.replace(/\[(.*?)\]/g,'') }, className: 'clean' },
+    { separator:'---------------' },
     { name: 'Preview',       call: 'preview',                                            className: 'preview' },
-    { name: 'Submit Post',   call: '$("#postform").submit()',                            className: 'subpost' },
+    { name: 'Submit Post',   call: 'subm',                                               className: 'subpost' },
     { separator: '---------------' },
-    { name: 'Help',          call: 'openindex(450,450,"http://tipmaster.com/includes/tgmlinfo.cfm?w=450&h=450",1)', className: 'help' },
+    { name: 'Help',                                                                      className: 'help', beforeInsert:function(m) { var inf=m; $('#tgmlinfo').dialog({ modal: false, position: { my: 'center', at: 'center', of: window }, autoOpen: true, open: function() { $(this).load('/tools/tgmlinfo.cfm') }, width: 780, height: 430, title: 'TGML' }) } },
+
   ],
 }
