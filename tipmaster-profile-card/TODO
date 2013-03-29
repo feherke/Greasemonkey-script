@@ -1,0 +1,3 @@
+* Add member type and most active forum name to the card.
+* Implement a manual and/or automatic way to delete old profile card data.
+* A filter to not even save the profile card data if for inactive members or if there are no common forums with the current memeber.

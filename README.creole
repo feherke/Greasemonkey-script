@@ -10,6 +10,7 @@ Here are some scripts I wrote.
 * **TipMaster - Author Hightlight** - Highlights the OP's and own messages in a thread.
 * **TipMaster - markItUp Setting** - Improved settings for the markItUp! editor.
 * **TipMaster - No Old New** - Remove the NEW icon from the old posts.
+* **TipMaster - Profile Card** - Display brief profile information on mouse over the member profile link.
 * **TipMaster - Reply with Quote** - Adds a reply link below each post to easily quote the answered message.
 * **TipMaster - Show/Hide Spoiler** - Adds links to show/hide spoiler tag's content.
 * **TipMaster - Time Ago** - Adds relative approximate equivalent after dates.
