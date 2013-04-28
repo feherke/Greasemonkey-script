@@ -12,7 +12,7 @@
 // @grant       GM_deleteValue
 // @grant       GM_listValues
 // @grant       unsafeWindow
-// @version     0.7
+// @version     0.8
 // ==/UserScript==
 
 
@@ -90,7 +90,9 @@ GM_addStyle( // box
 )
 
 GM_addStyle( // object
-  '.markItUp .marktube a { background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAIfSURBVDjLpZNPaBNBGMXfbrubzBqbg4kL0lJLgiVKE/AP6Kl6UUFQNAeDIAjVS08aELx59GQPAREV/4BeiqcqROpRD4pUNCJSS21OgloISWMEZ/aPb6ARdNeTCz92mO+9N9/w7RphGOJ/nsH+olqtvg+CYJR8q9VquThxuVz+oJTKeZ63Uq/XC38E0Jj3ff8+OVupVGLbolkzQw5HOqAxQU4wXWWnZrykmYD0QsgAOJe9hpEUcPr8i0GaJ8n2vs/sL2h8R66TpVfWTdETHWE6GRGKjGiiKNLii5BSLpN7pBHpgMYhMkm8tPUWz3sL2D1wFaY/jvnWcTTaE5DyjMfTT5J0XIAiTRYn3ASwZ1MKbTmN7z+KaHUOYqmb1fcPiNa4kQBuyvWAHYfcHGzDgYcx9NKrwJYHCAyF21JiPWBnXMAQOea6bmn+4ueYGZi8gtymNVobF7BG5prNpjd+eW6X4BSUD0gOdCpzA8MpA/v2v15kl4+pK0emwHSbjJGBlz+vYM1fQeDrYOBTdzOGvDf6EFNr+LYjHbBgsaCLxr+moNQjU2vYhRXpgIUOmSWWnsJRfjlOZhrexgtYDZ/gWbetNRbNs6QT10GJglNk64HMaGgbAkoMo5fiFNy7CKDQUGqE5r38YktxAfSqW7Zt33l66WtkAkACjuNsaLVaDxlw5HdJ/86aYrG4WCgUZD6fX+jv/U0ymfxoWVZomuZyf+8XqfGP49CCrBUAAAAASUVORK5CYII=); }'
+  '.markItUp .marktube a { background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAIfSURBVDjLpZNPaBNBGMXfbrubzBqbg4kL0lJLgiVKE/AP6Kl6UUFQNAeDIAjVS08aELx59GQPAREV/4BeiqcqROpRD4pUNCJSS21OgloISWMEZ/aPb6ARdNeTCz92mO+9N9/w7RphGOJ/nsH+olqtvg+CYJR8q9VquThxuVz+oJTKeZ63Uq/XC38E0Jj3ff8+OVupVGLbolkzQw5HOqAxQU4wXWWnZrykmYD0QsgAOJe9hpEUcPr8i0GaJ8n2vs/sL2h8R66TpVfWTdETHWE6GRGKjGiiKNLii5BSLpN7pBHpgMYhMkm8tPUWz3sL2D1wFaY/jvnWcTTaE5DyjMfTT5J0XIAiTRYn3ASwZ1MKbTmN7z+KaHUOYqmb1fcPiNa4kQBuyvWAHYfcHGzDgYcx9NKrwJYHCAyF21JiPWBnXMAQOea6bmn+4ueYGZi8gtymNVobF7BG5prNpjd+eW6X4BSUD0gOdCpzA8MpA/v2v15kl4+pK0emwHSbjJGBlz+vYM1fQeDrYOBTdzOGvDf6EFNr+LYjHbBgsaCLxr+moNQjU2vYhRXpgIUOmSWWnsJRfjlOZhrexgtYDZ/gWbetNRbNs6QT10GJglNk64HMaGgbAkoMo5fiFNy7CKDQUGqE5r38YktxAfSqW7Zt33l66WtkAkACjuNsaLVaDxlw5HdJ/86aYrG4WCgUZD6fX+jv/U0ymfxoWVZomuZyf+8XqfGP49CCrBUAAAAASUVORK5CYII=); }'+
+  '.markItUp .markchar a { width: 200px; background-image: none; padding-left: 5px; }'+
+  '.markItUp .markchar a b { color: red; font-family: monospace; background-color: gainsboro; padding-left: .33em; padding-right: .33em; }'
 )
 
 GM_addStyle( // text
@@ -183,6 +185,12 @@ var cannedresponse=unsafeWindow.cannedresponse={
   warn: function(w) { alert(w+' operation prepared.\nReload this page to finalize it.') },
 }
 
+// utility function object
+var utility=unsafeWindow.utility={
+  insert: function(m) { var d=document.createElement('div'); d.innerHTML=m.name.replace(/ .*/,''); return d.textContent; },
+  open: function(e,m,u,w,h,t) { $(e).dialog({ modal: m, position: { my: 'center', at: 'center', of: window }, autoOpen: true, open: function() { $(this).load(u) }, width: w, height: h, title: t }) },
+}
+
 // load canned responses
 var stored=GM_listValues().sort(function(a,b) { a=a.toLowerCase(); b=b.toLowerCase(); return a==b?0:a<b?-1:1 })
 for (var i=0,l=stored.length;i<l;i++) {
@@ -256,7 +264,7 @@ unsafeWindow.mySettings = {
     { name: 'Picture',       replaceWith: '[img [![URL ?:!:http://]!]]',                 className: 'markimg',   beforeInsert: function(m) { if (!m.original) m.original=m.replaceWith; if (m.selection) m.replaceWith=m.replaceWith.replace(/:!:.*\]!\]/,':!:'+m.selection+']!]') }, afterInsert: function(m) { m.replaceWith=m.original } },
     { name: 'YouTube',       replaceWith: '[youtube [![Movie ID?]!]]',                   className: 'marktube' },
     { name: 'Link',          openWith: '[link [![Url]!]]',    closeWith: '[/link]',      className: 'marklink',  placeHolder: 'Link Text' },
-    { name: 'Emoticons',                                                                 className: 'markemot', beforeInsert: function(m) { var inf=m; $('#postpop').dialog({ modal: true, position: { my: 'center', at: 'center', of: window }, autoOpen: true, open: function() { $(this).load('/tools/tgmlemotes.cfm?pos='+inf.caretPosition) }, width: 600, height: 430, title: 'Emoticons' }) }, dropMenu: [
+    { name: 'Emoticons',                                                                 className: 'markemot', beforeInsert: function() { utility.open('#postpop',true,'/tools/tgmlemotes.cfm',600,430,'Emoticons') }, dropMenu: [
       { name: '2 Thumbs Up', replaceWith: '[2thumbsup]',                                 className: 'emot2thumbsup' },
       { name: '3 Eyes',      replaceWith: '[3eyes]',                                     className: 'emot3eyes' },
       { name: 'Bang Head',   replaceWith: '[banghead]',                                  className: 'emotbanghead' },
@@ -274,6 +282,25 @@ unsafeWindow.mySettings = {
       { name: 'Sleeping',    replaceWith: '[sleeping]',                                  className: 'emotsleeping' },
       { name: 'Thumbs Up',   replaceWith: '[thumbsup2]',                                 className: 'emotthumbsup2' },
       { name: 'Upside Down', replaceWith: '[upsidedown]',                                className: 'emotupsidedown' },
+    ] },
+    { name: 'Unicode',                                                                   className: 'markunicode', beforeInsert: function() { utility.open('#postpop',true,'/tools/charentities.cfm',600,430,'Extended Characters') }, dropMenu: [
+      { name: '&nbsp; non-breaking space',                                               className: 'markchar', replaceWith: utility.insert },
+      { name: '&plusmn; plus-minus sign',                                                className: 'markchar', replaceWith: utility.insert },
+      { name: '&micro; micro sign',                                                      className: 'markchar', replaceWith: utility.insert },
+      { name: '&empty; empty set',                                                       className: 'markchar', replaceWith: utility.insert },
+      { name: '&isin; element of',                                                       className: 'markchar', replaceWith: utility.insert },
+      { name: '&notin; not an element of',                                               className: 'markchar', replaceWith: utility.insert },
+      { name: '&ni; contains as member',                                                 className: 'markchar', replaceWith: utility.insert },
+      { name: '&sum; n-ary sumation',                                                    className: 'markchar', replaceWith: utility.insert },
+      { name: '&radic; square root',                                                     className: 'markchar', replaceWith: utility.insert },
+      { name: '&infin; infinity',                                                        className: 'markchar', replaceWith: utility.insert },
+      { name: '&cong; approximately equal to',                                           className: 'markchar', replaceWith: utility.insert },
+      { name: '&asymp; almost equal to',                                                 className: 'markchar', replaceWith: utility.insert },
+      { name: '&ne; not equal to',                                                       className: 'markchar', replaceWith: utility.insert },
+      { name: '&equiv; identical to',                                                    className: 'markchar', replaceWith: utility.insert },
+      { name: '&le; less-than or equal to',                                              className: 'markchar', replaceWith: utility.insert },
+      { name: '&ge; greater-than or equal to',                                           className: 'markchar', replaceWith: utility.insert },
+      { name: '&permil; per mille / per thousand sign',                                  className: 'markchar', replaceWith: utility.insert },
     ] },
     { separator: '---------------' },
     { name: 'Preformatted',  openWith: '[pre]',               closeWith: '[/pre]',       className: 'markpre'  },
@@ -308,7 +335,13 @@ unsafeWindow.mySettings = {
     { name: 'Preview',       call: 'preview',                                            className: 'preview' },
     { name: 'Submit Post',   call: 'subm',                                               className: 'subpost' },
     { separator: '---------------' },
-    { name: 'Help',                                                                      className: 'help', beforeInsert:function(m) { var inf=m; $('#tgmlinfo').dialog({ modal: false, position: { my: 'center', at: 'center', of: window }, autoOpen: true, open: function() { $(this).load('/tools/tgmlinfo.cfm') }, width: 780, height: 430, title: 'TGML' }) } },
-
+    { name: 'Help',                                                                      className: 'help', beforeInsert:function() { utility.open('#tgmlinfo',false,'/tools/tgmlinfo.cfm',780,430,'TGML') } },
   ],
 }
+
+// post-process
+window.addEventListener('load',function() {
+  var char=document.querySelectorAll('li.markunicode ul li a')
+  for (var i=0,l=char.length;i<l;i++)
+    char[i].innerHTML=char[i].textContent.replace(/./,'<b>$&</b>')
+},false)

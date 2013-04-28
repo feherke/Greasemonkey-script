@@ -44,6 +44,10 @@
   [*] Emoticon, Help and Submit Post buttons now call the same functions as the "official" ones.
   [*] Minor adjustment on the forbidden activities list to not wrap.
 
+0.8 - April 2013
+  [+] New button Unicode, with the same functionality as the "official" one.
+  [+] Unicode button now has a drop-down list with the characters I think are used most frequently.
+
 
 
 ( Legend : [+] added, [-] removed, [*] changed, [!] fixed )
