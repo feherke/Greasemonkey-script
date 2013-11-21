@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        TipMaster - No Old New
-// @namespace   http://feherke.github.com/
+// @namespace   http://feherke.github.io/
 // @description Remove the NEW icon from the old posts.
 // @match       http://*.tek-tips.com/viewthread.cfm?qid=*
 // @match       http://*.eng-tips.com/viewthread.cfm?qid=*

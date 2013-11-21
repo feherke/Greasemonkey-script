@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        TipMaster - Profile Card
-// @namespace   http://feherke.github.com/
+// @namespace   http://feherke.github.io/
 // @description Display brief profile information on mouse over the member profile link.
 // @match       http://*.tek-tips.com/*
 // @match       http://*.eng-tips.com/*

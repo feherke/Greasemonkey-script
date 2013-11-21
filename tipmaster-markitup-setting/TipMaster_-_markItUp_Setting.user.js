@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        TipMaster - markItUp! Setting
-// @namespace   http://feherke.github.com/
+// @namespace   http://feherke.github.io/
 // @description Improved settings for the markItUp! editor.
 // @match       http://*.tek-tips.com/threadminder.cfm?pid=*
 // @match       http://*.tek-tips.com/viewthread.cfm?qid=*

@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           TipMaster - Reply with Quote
-// @namespace      http://feherke.github.com/
+// @namespace      http://feherke.github.io/
 // @description    Adds a reply link below each post to easily quote the answered message.
 // @match          http://*.tek-tips.com/viewthread.cfm?qid=*
 // @match          http://*.eng-tips.com/viewthread.cfm?qid=*

@@ -15,4 +15,4 @@ Here are some scripts I wrote.
 * **TipMaster - Show/Hide Spoiler** - Adds links to show/hide spoiler tag's content.
 * **TipMaster - Time Ago** - Adds relative approximate equivalent after dates.
 
-These scripts were intentionally kept short. For details see the [[http://feherke.github.com/javascript/greasemonkey/|Greasemonkey section of my site]].
+These scripts were intentionally kept short. For details see the [[http://feherke.github.io/javascript/greasemonkey/|Greasemonkey section of my site]].

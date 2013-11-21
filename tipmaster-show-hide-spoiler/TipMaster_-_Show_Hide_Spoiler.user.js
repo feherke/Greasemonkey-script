@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           TipMaster - Show/Hide Spoiler
-// @namespace      http://feherke.github.com/
+// @namespace      http://feherke.github.io/
 // @description    Adds links to show/hide spoiler tag's content.
 // @match          http://*.tek-tips.com/viewthread.cfm?qid=*
 // @match          http://*.eng-tips.com/viewthread.cfm?qid=*

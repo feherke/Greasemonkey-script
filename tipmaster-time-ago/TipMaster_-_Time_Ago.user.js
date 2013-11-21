@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           TipMaster - Time Ago
-// @namespace      http://feherke.github.com/
+// @namespace      http://feherke.github.io/
 // @description    Adds relative approximative equivalent after dates.
 // @match          http://*.tek-tips.com/threadminder.cfm?pid=*
 // @match          http://*.tek-tips.com/viewthread.cfm?qid=*
